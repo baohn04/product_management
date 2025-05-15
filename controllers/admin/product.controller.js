@@ -1,10 +1,12 @@
 const Product = require("../../models/product.model.js");
+const ProductCategory = require("../../models/product-category.model.js");
 
 const systemConfig = require("../../config/system.js");
 
 const filterStatusHelper = require("../../helpers/filterStatus.js");
 const searchHelper = require("../../helpers/search.js");
 const paginationHelper = require("../../helpers/pagination.js");
+const createTreeHelper = require("../../helpers/createTree.js");
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -129,9 +131,18 @@ module.exports.deleteItem = async (req, res) => {
 };
 
 // [GET] /admin/products/create
-module.exports.create = (req, res) => {
+module.exports.create = async (req, res) => {
+  let find = {
+    deleted: false,
+  };
+
+  const category = await ProductCategory.find(find);
+
+  const newCategory = createTreeHelper.tree(category);
+
   res.render("admin/pages/products/create.pug", {
     pageTitle: "Thêm mới sản phẩm",
+    category: newCategory
   });
 };
 
@@ -169,9 +180,15 @@ module.exports.edit = async (req, res) => {
     };
 
     const product = await Product.findOne(find); // Chỉ tìm ra một bản ghi trong database
+
+    const category = await ProductCategory.find({
+      deleted: false,
+    });
+    const newCategory = createTreeHelper.tree(category);
     res.render("admin/pages/products/edit.pug", {
       pageTitle: "Chỉnh sửa sản phẩm",
       product: product,
+      category: newCategory
     });
   } catch (error) {
     // Nên là trang 404 sẽ tốt hơn
