@@ -130,7 +130,7 @@ module.exports.editPatch = async (req, res) => {
     req.body.thumbnail = `/uploads/${req.file.filename}`;
   }
 
-  // Update product
+  // Update category
   try {
     await Product.updateOne({ _id: id }, req.body);
     req.flash("success", "Cập nhật sản phẩm thành công!");

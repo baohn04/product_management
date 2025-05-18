@@ -9,7 +9,7 @@ block main
   h1(class="mb-4") Chỉnh sửa danh mục sản phẩm
 
   form(
-    action=`${prefixAdmin}/products-category/edit/${data.id}`
+    action=`${prefixAdmin}/products-category/edit/${data.id}?_method=PATCH`
     method="POST"
     enctype="multipart/form-data"
   ) 
