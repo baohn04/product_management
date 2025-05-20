@@ -25,6 +25,7 @@ module.exports.create = async (req, res) => {
 module.exports.createPost = async (req, res) => {
   const records = new Role(req.body);
   await records.save();
+  req.flash("success", "Thêm nhóm quyền thành công!");
   res.redirect(`${systemConfig.prefixAdmin}/roles`);
 };
 
