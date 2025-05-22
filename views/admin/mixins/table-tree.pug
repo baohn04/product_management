@@ -22,32 +22,35 @@ mixin table-tree(records, level = 1)
           name="position"
         )
       td
-        if(item.status == "active")
+        if(role.permissions.includes("products-category_edit"))
+          if(item.status == "active")
+            a(
+              href="javascript:;"
+              data-id=item.id
+              data-status=item.status
+              button-change-status 
+              class="badge badge-success"
+            ) Hoạt động
+          else 
+            a(
+              href="javascript:;"
+              data-id=item.id
+              data-status=item.status
+              button-change-status
+              class="badge badge-danger"
+            ) Dừng hoạt động
+      td
+        if(role.permissions.includes("products-category_edit"))
           a(
-            href="javascript:;"
+            href=`${prefixAdmin}/products-category/edit/${item.id}`
+            class="btn btn-warning btn-sm"
+          ) Sửa
+        if(role.permissions.includes("products-category_delete")) 
+          button(
+            class="btn btn-danger btn-sm"
+            button-delete
             data-id=item.id
-            data-status=item.status
-            button-change-status 
-            class="badge badge-success"
-          ) Hoạt động
-        else 
-          a(
-            href="javascript:;"
-            data-id=item.id
-            data-status=item.status
-            button-change-status
-            class="badge badge-danger"
-          ) Dừng hoạt động
-      td 
-        a(
-          href=`${prefixAdmin}/products-category/edit/${item.id}`
-          class="btn btn-warning btn-sm"
-        ) Sửa 
-        button(
-          class="btn btn-danger btn-sm"
-          button-delete
-          data-id=item.id
-        ) Xóa
+          ) Xóa
         a(
           href=`${prefixAdmin}/products-category/detail/${item.id}`
           class="btn btn-secondary btn-sm"

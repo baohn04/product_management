@@ -5,12 +5,7 @@ const md5 = require("md5");
 // [GET] /admin/auth/login
 module.exports.login = async (req, res) => {
   if(req.cookies.token) {
-    const user = await Account.findOne({
-      token: req.cookies.token,
-    });
-    if(user) {
-      res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
-    }
+    res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
   } else {
     res.render("admin/pages/auth/login.pug", {
       pageTitle: "Đăng nhập",
