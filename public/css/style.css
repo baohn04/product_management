@@ -60,6 +60,8 @@
   padding: 1rem;
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
+  height: 100%;
+  width: 100%;
 }
 
 .product-item:hover {
@@ -67,11 +69,27 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+.product-item .inner-image {
+  position: relative;
+}
+
 .inner-image img {
   max-width: 100%;
   height: auto;
   margin-bottom: 1rem;
   border-radius: 5px;
+}
+
+.product-item .inner-featured {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: green;
+  color: white;
+  padding: 3px 6px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
 }
 
 .inner-content h3.inner-title {
@@ -98,3 +116,43 @@
 }
 
 /* End Products */
+
+/* Sub menu */
+/* Menu cấp đầu tiên */
+.sub-menu {
+  position: relative;
+  z-index: 999;
+}
+
+.sub-menu ul {
+  list-style: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  display: none;
+  padding: 0;
+  margin: 0;
+  background: #f8f9fa;
+  min-width: 150px;
+}
+
+.sub-menu ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+/* Hiển thị submenu khi hover */
+.sub-menu:hover > ul {
+  display: block;
+}
+
+.sub-menu ul li ul {
+  right: 100%;
+  top: 0;
+}
+
+.sub-menu ul li:hover > ul {
+  display: block;
+}
+/* End Sub menu */

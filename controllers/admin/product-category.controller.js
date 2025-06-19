@@ -8,59 +8,16 @@ const createTreeHelper = require("../../helpers/createTree.js");
 
 // [GET] /admin/products-category
 module.exports.index = async (req, res) => {
-  //Filter
-  // const filterStatus = filterStatusHelper(req.query);
-  // End Filter
   let find = {
     deleted: false,
   };
 
-  // Sử dụng params trên url thì if mới thực hiện
-  // if (req.query.status) {
-  //   find.status = req.query.status;
-  // }
-
-  // //Search
-  // const objectSearch = searchHelper(req.query);
-  // if (objectSearch.regex) {
-  //   find.title = objectSearch.regex;
-  // }
-  // End Search
-
-  //Pagination
-  // const count = await ProductCategory.countDocuments(find);
-  // let objectPagination = paginationHelper(
-  //   {
-  //     currentPage: 1,
-  //     limitItems: 4,
-  //   },
-  //   req.query,
-  //   count
-  // );
-  // End Pagination
-
-  // Sort
-  // let sort = {};
-
-  // if (req.query.sortKey && req.query.sortValue) {
-  //   sort[req.query.sortKey] = req.query.sortValue;
-  // } else {
-  //   sort.position = "desc";
-  // }
-  // End Sort
-
   const records = await ProductCategory.find(find);
-  // .sort(sort)
-  // .limit(objectPagination.limitItems)
-  // .skip(objectPagination.skip);
   const newRecords = createTreeHelper.tree(records);
 
   res.render("admin/pages/products-category/index.pug", {
     pageTitle: "Danh mục sản phẩm",
     records: newRecords,
-    // filterStatus: filterStatus,
-    // keyword: objectSearch.keyword,
-    // pagination: objectPagination,
   });
 };
 
@@ -82,6 +39,13 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products-category/create
 module.exports.createPost = async (req, res) => {
+  // const permissions = res.locals.permissions;
+  // if(permissions.includes("products-category_create")) {
+  //    console.log("Có quyền");
+  // } else {
+  //   res.send("403");
+  //   return;
+  // } -->> dùng để xử lý nếu cố tình truy cập bằng url
   if (req.body.position == "") {
     const count = await ProductCategory.countDocuments();
     req.body.position = count + 1;
