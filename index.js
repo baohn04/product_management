@@ -40,9 +40,15 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.locals.moment = moment;
 
-//routes
+// routes
 route(app);
 routeAdmin(app);
+// 404
+app.get("*", (req, res) => { // * là các trường hợp route còn lại
+  res.render("client/pages/errors/404", {
+    pageTitle: "404 Not Found"
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
