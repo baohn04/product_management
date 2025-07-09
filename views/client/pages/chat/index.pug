@@ -1,0 +1,45 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug 
+
+block main 
+  .container.my-5 
+    .row 
+      .col-12 
+        +box-head("Chat")
+
+    .row 
+      .col-12 
+        .chat(my-id=user.id) 
+          .inner-body 
+            each chat in chats
+              div(class=(chat.infoUser.id == user.id ? "inner-outgoing" : "inner-incoming"))
+                if(chat.infoUser.id != user.id) 
+                  .inner-name #{chat.infoUser.fullName}
+                .inner-content
+                  | #{chat.content}
+            //- .inner-outgoing 
+            //-   .inner-content 
+            //-     | Mày muốn lấy chợ lớn?
+            //- .inner-incoming 
+            //-   .inner-name Thằng lol 
+            //-   .inner-content 
+            //-     | Đưa chợ lớn cho tao 
+            //- .inner-outgoing 
+            //-   .inner-content 
+            //-     | Nhưng mày phải đánh bại tao đã
+            //- .inner-incoming 
+            //-   .inner-name Thằng lol 
+            //-   .inner-content 
+            //-     | Nhào vô :))
+          .inner-foot 
+            form(
+              class="inner-form"
+              action=""
+            )
+              input(
+                type="text"
+                placeholder="Nhập nội dung..."
+                name="content"
+              )
+              button 
+                i.fa-solid.fa-paper-plane

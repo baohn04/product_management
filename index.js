@@ -1,11 +1,13 @@
 const express = require("express");
 const path = require("path");
+const http = require('http');
 const methodOverride = require("method-override");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('express-flash');
 const moment = require('moment');
+const { Server } = require("socket.io");
 require("dotenv").config();
 
 const database = require("./config/database.js");
@@ -27,6 +29,11 @@ app.use(bodyParser.urlencoded())
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 app.use(express.static(`${__dirname}/public`));
+
+// SocketIO
+const server = http.createServer(app);
+const io = new Server(server);
+global._io = io; // Biến toàn cục của socketIO
 
 //Flash
 app.use(cookieParser('JKJHKAJSHDADGAS'));
@@ -50,6 +57,6 @@ app.get("*", (req, res) => { // * là các trường hợp route còn lại
   });
 });
 
-app.listen(port, () => {
+server.listen(port, () => { // đổi sang sever để tích hợp socketIO thay vì app
   console.log(`Example app listening on port ${port}`);
 });
